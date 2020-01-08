@@ -16,6 +16,7 @@
         <p>Status: Inactive</p>
         <%= button_to 'Activate', "/merchant/items/#{item.id}?status=activate", method: :patch %>
       <% end %>
+      <%= button_to 'Edit Item', "/merchant/items/#{item.id}/edit", method: :get %>
     </section>
   <% end %>
 </section>

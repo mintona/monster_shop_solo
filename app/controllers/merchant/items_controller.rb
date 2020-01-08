@@ -14,8 +14,22 @@ class Merchant::ItemsController < Merchant::BaseController
     elsif activate?
       activate(item)
     end
-    
     redirect_to merchant_items_path
+  end
+
+  def item_update
+    @item = Item.find(params[:id])
+    @item.update(item_params)
+    if @item.save
+      redirect_to "merchant/items"
+    else
+      flash[:error] = @item.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
+
+  def edit
+    @item = Item.find(params[:id])
   end
 
   private
@@ -37,5 +51,9 @@ class Merchant::ItemsController < Merchant::BaseController
       if item.toggle!(:active?)
         flash[:success] = "#{item.name} is available for sale."
       end
+    end
+
+    def item_params
+      params.permit(:name, :description, :price, :inventory, :image)
     end
 end
