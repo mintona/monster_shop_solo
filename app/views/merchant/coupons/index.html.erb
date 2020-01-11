@@ -2,7 +2,7 @@
 
   <section class="grid-container">
     <% @coupons.each do |coupon| %>
-      <section class = "grid-coupon" id = 'coupon-<%=coupon.id%>'>
+      <section class = "grid-item" id = 'coupon-<%=coupon.id%>'>
         <h2> <%=link_to coupon.name, merchant_coupon_path(coupon.id) %> </h2>
           <p>Code: <%= coupon.code %> </p>
           <p>Discount Percentage: <%= number_to_percentage(coupon.percent * 100, precision: 0) %> </p>
