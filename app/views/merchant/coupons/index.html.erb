@@ -1,11 +1,19 @@
 <h1> Coupons for <%= current_user.merchant.name %> </h1>
-
-  <section class="grid-container">
-    <% @coupons.each do |coupon| %>
-      <section class = "grid-item" id = 'coupon-<%=coupon.id%>'>
-        <h2> <%=link_to coupon.name, merchant_coupon_path(coupon.id) %> </h2>
-          <p>Code: <%= coupon.code %> </p>
-          <p>Discount Percentage: <%= number_to_percentage(coupon.percent * 100, precision: 0) %> </p>
-      </section>
+  <center>
+    <% if @coupons.empty? %>
+      <h3> You have not added any coupons yet.</h3>
     <% end %>
-  </section>
+
+    <%= link_to 'Create New Coupon' %>
+    <br>
+    <br>
+    <section class="grid-container">
+      <% @coupons.each do |coupon| %>
+        <section class = "grid-item" id = 'coupon-<%=coupon.id%>'>
+          <h2> <%=link_to coupon.name, merchant_coupon_path(coupon.id) %> </h2>
+            <p>Code: <%= coupon.code %> </p>
+            <p>Discount Percentage: <%= number_to_percentage(coupon.percent * 100, precision: 0) %> </p>
+        </section>
+      <% end %>
+    </section>
+  </center>

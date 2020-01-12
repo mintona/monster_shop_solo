@@ -1,0 +1,4 @@
+<h1> Coupon: <%= @coupon.name %> </h1>
+
+  <p><b>Code:</b> <%= @coupon.code %> </p>
+  <p><b>Discount Percentage:</b> <%= number_to_percentage(@coupon.percent * 100, precision: 0) %> </p>
