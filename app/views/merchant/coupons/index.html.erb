@@ -14,6 +14,7 @@
             <p>Code: <%= coupon.code %> </p>
             <p>Discount Percentage: <%= number_to_percentage(coupon.percent, precision: 0) %> </p>
             <center> <%= button_to 'Edit', edit_merchant_coupon_path(coupon.id), method: :get %> </center>
+            <center> <%= button_to 'Delete' %> </center>
         </section>
       <% end %>
     </section>
