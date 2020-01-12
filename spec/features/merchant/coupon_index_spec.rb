@@ -55,5 +55,20 @@ RSpec.describe "As a merchant" do
       expect(page).to_not have_content(coupon_4.code)
       expect(page).to_not have_content(coupon_4.percent)
     end
+
+    describe "if I have no coupons" do
+      it "I see text alerting me I have no coupons and a link to add a new coupon" do
+        store_2 = create(:merchant)
+        merchant_2 = create(:user, role: 1, merchant: store_2)
+
+        allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_2)
+
+        visit merchant_coupons_path
+
+        expect(page).to have_content("You have not added any coupons yet.")
+
+        expect(page).to have_link("Create New Coupon")
+      end
+    end
   end
 end
