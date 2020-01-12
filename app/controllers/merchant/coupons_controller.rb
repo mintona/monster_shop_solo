@@ -6,4 +6,13 @@ class Merchant::CouponsController < Merchant::BaseController
   def show
     @coupon = Coupon.find(params[:id])
   end
+
+  def new
+    @coupon = Coupon.new
+  end
+
+  private
+    def coupon_params
+      params.require(:coupon).permit(:name, :code, :percent)
+    end
 end
