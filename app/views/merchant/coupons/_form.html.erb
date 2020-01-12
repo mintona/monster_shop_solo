@@ -1,0 +1,12 @@
+<%= form_for @coupon, url: merchant_coupons_path do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name%>
+
+  <%= f.label :code %>
+  <%= f.text_field :code %>
+
+  <%= f.label :percent %>
+  <%= f.number_field :percent, min: 0, max: 100 %>
+
+  <%= f.submit %>
+<% end %>

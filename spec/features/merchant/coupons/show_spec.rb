@@ -23,7 +23,7 @@ RSpec.describe "As a merchant" do
 
       expect(page).to have_content(@coupon_1.name)
       expect(page).to have_content(@coupon_1.code)
-      expect(page).to have_content(((@coupon_1.percent) * 100).to_i)
+      expect(page).to have_content("#{@coupon_1.percent}%")
     end
   end
 end

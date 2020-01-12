@@ -9,6 +9,7 @@
 ItemOrder.destroy_all
 Order.destroy_all
 User.destroy_all
+Coupon.destroy_all
 Merchant.destroy_all
 Item.destroy_all
 #need to add something about destroying coupons... lots of dependencies here!
@@ -25,9 +26,9 @@ jersey = bike_shop.items.create(name: "Jersey", description: "Ladies bike jersey
 helmet = bike_shop.items.create(name: "Helmet", description: "The hipster-ist helmet there ever was!", price: 95, image: "https://cdn.shopify.com/s/files/1/0836/6919/products/thousand-helmet-rose-gold-1_2000x.jpg?v=1568244140", inventory: 4)
 
 #bike_shop_coupons
-winter = bike_shop.coupons.create(name: "Winter Sale 2020", code: "WINTER 2020", percent: 0.15)
-spring = bike_shop.coupons.create(name: "Spring Sale 2020", code: "Spring 2020", percent: 0.15)
-blowout = bike_shop.coupons.create(name: "Blowout Sale!", code: "BLOWOUT 2020", percent: 0.50)
+winter = bike_shop.coupons.create(name: "Winter Sale 2020", code: "WINTER 2020", percent: 15)
+spring = bike_shop.coupons.create(name: "Spring Sale 2020", code: "Spring 2020", percent: 20)
+blowout = bike_shop.coupons.create(name: "Blowout Sale!", code: "BLOWOUT 2020", percent: 50)
 
 #dog_shop items
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)

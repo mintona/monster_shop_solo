@@ -4,7 +4,7 @@
       <h3> You have not added any coupons yet.</h3>
     <% end %>
 
-    <%= link_to 'Create New Coupon' %>
+    <%= link_to 'Create New Coupon', new_merchant_coupon_path %>
     <br>
     <br>
     <section class="grid-container">
@@ -12,7 +12,7 @@
         <section class = "grid-item" id = 'coupon-<%=coupon.id%>'>
           <h2> <%=link_to coupon.name, merchant_coupon_path(coupon.id) %> </h2>
             <p>Code: <%= coupon.code %> </p>
-            <p>Discount Percentage: <%= number_to_percentage(coupon.percent * 100, precision: 0) %> </p>
+            <p>Discount Percentage: <%= number_to_percentage(coupon.percent, precision: 0) %> </p>
         </section>
       <% end %>
     </section>
