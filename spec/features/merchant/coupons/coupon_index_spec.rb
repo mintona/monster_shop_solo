@@ -23,23 +23,20 @@ RSpec.describe "As a merchant" do
       within "#coupon-#{@coupon_1.id}" do
         expect(page).to have_link(@coupon_1.name)
         expect(page).to have_content(@coupon_1.code)
-        expect(@coupon_1.percent).to eq(0.2)
-        expect(page).to have_content("20%")
+        expect(page).to have_content(((@coupon_1.percent) * 100).to_i)
       end
 
       within "#coupon-#{@coupon_2.id}" do
         expect(page).to have_link(@coupon_2.name)
         expect(page).to have_content(@coupon_2.code)
-        expect(@coupon_2.percent).to eq(0.2)
-        expect(page).to have_content("20%")
+        expect(page).to have_content(((@coupon_2.percent) * 100).to_i)
 
       end
 
       within "#coupon-#{@coupon_3.id}" do
         expect(page).to have_link(@coupon_3.name)
         expect(page).to have_content(@coupon_3.code)
-        expect(@coupon_3.percent).to eq(0.2)
-        expect(page).to have_content("20%")
+        expect(page).to have_content(((@coupon_3.percent) * 100).to_i)
       end
     end
 
