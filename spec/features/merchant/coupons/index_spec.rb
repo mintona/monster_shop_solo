@@ -23,35 +23,34 @@ RSpec.describe "As a merchant" do
       within "#coupon-#{@coupon_1.id}" do
         expect(page).to have_link(@coupon_1.name)
         expect(page).to have_content(@coupon_1.code)
-        expect(page).to have_content(((@coupon_1.percent) * 100).to_i)
+        expect(page).to have_content("#{@coupon_1.percent}%")
       end
 
       within "#coupon-#{@coupon_2.id}" do
         expect(page).to have_link(@coupon_2.name)
         expect(page).to have_content(@coupon_2.code)
-        expect(page).to have_content(((@coupon_2.percent) * 100).to_i)
+        expect(page).to have_content("#{@coupon_2.percent}%")
 
       end
 
       within "#coupon-#{@coupon_3.id}" do
         expect(page).to have_link(@coupon_3.name)
         expect(page).to have_content(@coupon_3.code)
-        expect(page).to have_content(((@coupon_3.percent) * 100).to_i)
+        expect(page).to have_content("#{@coupon_3.percent}%")
       end
     end
 
     it "I do not see coupons that do not belong to my store" do
       store_2 = create(:merchant)
 
-      coupon_4 = create(:coupon, merchant: store_2, percent: 0.6)
+      coupon_4 = create(:coupon, merchant: store_2, percent: 60)
 
       visit merchant_coupons_path
 
       expect(page).to_not have_css("#coupon-#{coupon_4.id}")
       expect(page).to_not have_link(coupon_4.name)
       expect(page).to_not have_content(coupon_4.code)
-      # expect(page).to_not have_content(coupon_4.percent)
-      expect(page).to_not have_content((coupon_4.percent * 100).to_i)
+      expect(page).to_not have_content("#{coupon_4.percent}%")
     end
 
     describe "if I have no coupons" do
