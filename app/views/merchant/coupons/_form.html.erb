@@ -6,7 +6,7 @@
   <%= f.text_field :code %>
 
   <%= f.label :percent %>
-  <%= f.number_field :percent %>
+  <%= f.number_field :percent, min: 0, max: 100 %>
 
   <%= f.submit %>
 <% end %>
