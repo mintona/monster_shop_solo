@@ -28,6 +28,18 @@ class Merchant::CouponsController < Merchant::BaseController
     @coupon = Coupon.find(params[:id])
   end
 
+  def update
+    @coupon = Coupon.find(params[:format])
+
+    if @coupon.update(coupon_params)
+      flash[:success] = "Coupon has been updated!"
+      redirect_to merchant_coupons_path
+    else
+      flash[:error] = "#{@coupon.errors.full_messages.to_sentence}. Please try again."
+      render :edit
+    end
+  end
+
   private
     def coupon_params
       params.require(:coupon).permit(:name, :code, :percent)

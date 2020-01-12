@@ -13,7 +13,7 @@
           <h2> <%=link_to coupon.name, merchant_coupon_path(coupon.id) %> </h2>
             <p>Code: <%= coupon.code %> </p>
             <p>Discount Percentage: <%= number_to_percentage(coupon.percent, precision: 0) %> </p>
-            <%= button_to 'Edit', edit_merchant_coupon_path(coupon.id), method: :get %>
+            <center> <%= button_to 'Edit', edit_merchant_coupon_path(coupon.id), method: :get %> </center>
         </section>
       <% end %>
     </section>
