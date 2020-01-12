@@ -11,7 +11,7 @@ RSpec.describe Coupon do
     it {should validate_presence_of :percent}
     #do you need to validate both presence of and numericality of?
     it {should validate_numericality_of(:percent).is_greater_than_or_equal_to(0)}
-    it {should validate_numericality_of(:percent).is_less_than_or_equal_to(1)}
+    it {should validate_numericality_of(:percent).is_less_than_or_equal_to(100)}
 
   end
 
