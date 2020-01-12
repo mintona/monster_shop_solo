@@ -50,7 +50,8 @@ RSpec.describe "As a merchant" do
       expect(page).to_not have_css("#coupon-#{coupon_4.id}")
       expect(page).to_not have_link(coupon_4.name)
       expect(page).to_not have_content(coupon_4.code)
-      expect(page).to_not have_content(coupon_4.percent)
+      # expect(page).to_not have_content(coupon_4.percent)
+      expect(page).to_not have_content((coupon_4.percent * 100).to_i)
     end
 
     describe "if I have no coupons" do
