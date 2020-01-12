@@ -8,9 +8,8 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
   end
-  
-  describe "when I visit the coupon index page" do
 
+  describe "when I visit the coupon index page" do
     describe "and click the button Edit next to the coupon" do
       it "I fill out all required fields on the form to edit that coupon's information and am redirected back to the coupon index" do
         original_name = @coupon_1.name
@@ -146,7 +145,7 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
 
   describe "when I am on a coupon's show page" do
     describe "I click the edit button" do
-      it "I fill out all required fields on the form to edit that coupon's information and am redirected back to the coupon's show page" do
+      it "I fill out all required fields on the form to edit that coupon's information and am redirected back to the coupon index page" do
         original_name = @coupon_1.name
         original_code = @coupon_1.code
         original_percent = @coupon_1.percent
@@ -165,19 +164,19 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
 
         click_button 'Update Coupon'
 
-        expect(current_path).to eq(merchant_coupon_path(@coupon_1.id))
+        expect(current_path).to eq(merchant_coupons_path)
         expect(page).to have_content("Coupon has been updated!")
 
-        expect(page).to have_content(new_name)
-        expect(page).to have_content(new_code)
-        expect(page).to have_content("#{new_percent}%")
+        within "#coupon-#{@coupon_1.id}" do
+          expect(page).to have_link(new_name)
+          expect(page).to have_content(new_code)
+          expect(page).to have_content("#{new_percent}%")
 
-        expect(page).to_not have_content(original_name)
-        expect(page).to_not have_content(original_code)
-        expect(page).to_not have_content("#{original_percent}%")
+          expect(page).to_not have_link(original_name)
+          expect(page).to_not have_content(original_code)
+          expect(page).to_not have_content("#{original_percent}%")
+        end
       end
     end
   end
-
-
 end
