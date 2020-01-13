@@ -48,6 +48,19 @@ RSpec.describe Cart do
       expect(result).to eq(24)
     end
 
+    it 'discounted_total' do
+      # store = create(:merchant)
+      coupon_1 = create(:coupon, percent: 20, merchant: @mike)
+
+      cart = Cart.new(Hash.new(0))
+      cart.add_item(@paper.id.to_s)
+      cart.add_item(@pencil.id.to_s)
+      cart.add_item(@pencil.id.to_s)
+      result = cart.discounted_total
+
+      expect(result).to eq(19.2)
+    end
+
     it 'add_quantity(item_id)' do
       cart = Cart.new(Hash.new(0))
       cart.add_item(@paper.id.to_s)
