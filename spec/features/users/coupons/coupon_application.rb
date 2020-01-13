@@ -51,7 +51,9 @@ RSpec.describe "As a in user" do
 
       expect(current_path).to eq(cart_path)
       expect(page).to have_content("#{@coupon_1.code} has been applied to your order.")
-      expect(page).to have_content("Discounted Total: $14.40")
+
+      expect(page).to have_content("Total: $27.00")
+      expect(page).to have_content("Discounted Total: $21.60")
       expect(page).to have_content("Coupon Applied: #{@coupon_1.code}")
     end
 
