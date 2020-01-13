@@ -20,4 +20,40 @@ RSpec.describe Coupon do
     # it {should belong_to(:order).optional}
     it {should have_many :orders}
   end
+
+  describe "attributes" do
+    it "has attributes" do
+      merchant = create(:merchant)
+      coupon = Coupon.create!(name: "Winter Sale",
+                              code: "WINTER 2020",
+                              percent: 30,
+                              merchant: merchant)
+
+      expect(coupon.name).to eq("Winter Sale")
+      expect(coupon.code).to eq("WINTER 2020")
+      expect(coupon.percent).to eq(30)
+    end
+  end
+
+  describe "model methods" do
+    describe "#never_applied?" do
+      it "returns true if a coupon has not been applied to an order" do
+        store = create(:merchant)
+        coupon_1 = create(:coupon, merchant: store)
+        coupon_2 = create(:coupon, merchant: store)
+
+        item_1 = create(:item, inventory: 20, merchant: store)
+
+        order = create(:order)
+
+        order.item_orders.create(item: item_1, quantity: 2, price: item_1.price)
+
+        coupon_1.orders << order
+
+        expect(coupon_1.never_applied?).to eq(false)
+        expect(coupon_2.never_applied?).to eq(true)
+      end
+    end
+  end
+
 end
