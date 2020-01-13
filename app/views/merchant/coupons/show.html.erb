@@ -3,4 +3,6 @@
   <p><b>Code:</b> <%= @coupon.code %> </p>
   <p><b>Discount Percentage:</b> <%= number_to_percentage(@coupon.percent, precision: 0) %> </p>
   <%= button_to 'Edit', edit_merchant_coupon_path(@coupon.id), method: :get %>
-  <%= button_to 'Delete', merchant_coupon_path(@coupon.id), method: :delete %>
+  <% if @coupon.never_applied? %>
+    <%= button_to 'Delete', merchant_coupon_path(@coupon.id), method: :delete %>
+  <% end %>
