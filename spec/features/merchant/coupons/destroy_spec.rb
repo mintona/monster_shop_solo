@@ -80,12 +80,11 @@ RSpec.describe "As a merchant" do
     end
   end
 
-  describe "I cannot delete a coupon if it has been applied to an order of any status" do
+  describe "I cannot delete a coupon if it has been applied to an order" do
     before :each do
       store = create(:merchant)
       @merchant = create(:user, role: 1, merchant: store)
 
-      # @user = User.last
       @order = create(:order)
 
       @item_1 = create(:item, inventory: 20, merchant: store)
@@ -99,7 +98,7 @@ RSpec.describe "As a merchant" do
       @coupon_1 = create(:coupon, merchant: store)
       @coupon_2 = create(:coupon, merchant: store)
 
-      @order.coupon = @coupon_1
+      @coupon_1.orders << @order
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
     end
@@ -116,8 +115,10 @@ RSpec.describe "As a merchant" do
       end
     end
 
-    xit "there is no delete button on a coupon show page if it has been applied to an order" do
+    it "there is no delete button on a coupon show page if it has been applied to an order" do
+      visit merchant_coupon_path(@coupon_1.id)
 
+      expect(page).to_not have_button('Delete')
     end
   end
 end
