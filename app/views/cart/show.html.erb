@@ -48,7 +48,8 @@
       </table>
         <p>Total: <%= number_to_currency(cart.total) %></p>
         <% if current_coupon %>
-          <p>Discounted Total: <%= number_to_currency(cart.discounted_total) %></p>
+          <p>Coupon Applied: <%= current_coupon.code %></p>
+          <p>Discounted Total: <%= number_to_currency(cart.discounted_total(current_coupon.merchant_id, current_coupon.percent)) %></p>
         <% end %>
         <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
           <% if current_user %>
