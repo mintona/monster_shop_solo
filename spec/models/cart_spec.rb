@@ -48,17 +48,27 @@ RSpec.describe Cart do
       expect(result).to eq(24)
     end
 
-    it 'discounted_total' do
-      # store = create(:merchant)
+    it 'discounted_total(merchant_id, percent)' do
+      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+
+      tire = meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+
       coupon_1 = create(:coupon, percent: 20, merchant: @mike)
 
       cart = Cart.new(Hash.new(0))
       cart.add_item(@paper.id.to_s)
       cart.add_item(@pencil.id.to_s)
       cart.add_item(@pencil.id.to_s)
-      result = cart.discounted_total
+
+      result = cart.discounted_total(@mike.id, coupon_1.percent)
 
       expect(result).to eq(19.2)
+
+      cart.add_item(tire.id.to_s)
+
+      result_2 = cart.discounted_total(@mike.id, coupon_1.percent)
+
+      expect(result_2).to eq(119.2)
     end
 
     it 'add_quantity(item_id)' do
