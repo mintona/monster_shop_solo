@@ -32,6 +32,10 @@ class Cart
     end
   end
 
+  def discounted_total
+    #left off here.
+  end
+
   def add_quantity(item_id)
     @contents[item_id] += 1
   end
