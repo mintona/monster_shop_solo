@@ -16,13 +16,15 @@
 
  body {
  background-color: white;
+ font-family: Arial, Helvetica, sans-sans-serif;
+ padding: 20px;
  }
 
  h1 {
   text-align: center;
  	font-size: 40px;
  	color: #002244;
- 	font-family: "Marker Felt", fantasy;
+ 	/* font-family: "Marker Felt", fantasy; */
  }
 
 ul{
@@ -31,6 +33,19 @@ ul{
 }
 img{
   width: 50%;
+}
+
+a:link {
+  text-decoration: none;
+  color: #98AEB3;
+}
+
+a:visited {
+  color: #98AEB3;
+}
+
+a:hover {
+  color: hotpink;
 }
 
 #cart-image{
@@ -56,11 +71,12 @@ section[id*='review'] {
  }
 
  .grid-item{
- 	background-color: #17BEBB;
+ 	background-color: #EFEEEE;
  	padding: 20px;
   border: solid;
  	border-radius: 12px;
-  border-color: #002244;
+  border-color: gray;
+  border-width: 1px;
  	text-align: center
  }
  .item-show-grid{
@@ -78,7 +94,8 @@ section[id*='review'] {
 
  .topnav {
    overflow: hidden;
-   background-color: #002244;
+   background-color: #98AEB3;
+   border-radius: 4px;
  }
 
  .topnav a {
@@ -91,7 +108,7 @@ section[id*='review'] {
  }
 
  .topnav a:hover {
-   background-color: #17BEBB;
+   background-color: hotpink;
    color: black;
  }
 
@@ -131,7 +148,7 @@ section[id*='review'] {
 
 input[type=submit] {
   width: 100%;
-  background-color: #17BEBB;
+  background-color: #999999;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -141,7 +158,7 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-  background-color: #45a049;
+  background-color: hotpink;
 }
 form {
   align-content: center;
@@ -150,7 +167,7 @@ form {
   width: 60%;
 }
 
-.error-flash {
+/* .error-flash {
   padding: 10px;
   background-color: red;
   color: white;
@@ -159,6 +176,32 @@ form {
   padding: 10px;
   background-color: green;
   color: white;
+} */
+
+.error-flash {
+  color:red;
+  border-color:red;
+}
+
+.success-flash {
+  color:green;
+  border:green;
+}
+
+p.error-flash {
+  border-style: outset;
+  border-color: red;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #FFCCCB;
+}
+
+p.success-flash {
+  border-style: outset;
+  border-color: green;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #BFF7df;
 }
 
 table {

@@ -42,10 +42,10 @@
         <%= link_to "Cart: #{cart.total_items}", "/cart" %>
       <% end %>
     </nav>
-    
+
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
-        <p><%= msg %></p>
+        <p class = "<%=name%>-flash"><%= msg %></p>
       </div>
     <% end %>
     <%= yield %>

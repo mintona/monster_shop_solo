@@ -24,19 +24,24 @@ RSpec.describe "As a merchant" do
         expect(page).to have_link(@coupon_1.name)
         expect(page).to have_content(@coupon_1.code)
         expect(page).to have_content("#{@coupon_1.percent}%")
+        expect(page).to have_button("Edit")
+        expect(page).to have_button("Delete")
       end
 
       within "#coupon-#{@coupon_2.id}" do
         expect(page).to have_link(@coupon_2.name)
         expect(page).to have_content(@coupon_2.code)
         expect(page).to have_content("#{@coupon_2.percent}%")
-
+        expect(page).to have_button("Edit")
+        expect(page).to have_button("Delete")
       end
 
       within "#coupon-#{@coupon_3.id}" do
         expect(page).to have_link(@coupon_3.name)
         expect(page).to have_content(@coupon_3.code)
         expect(page).to have_content("#{@coupon_3.percent}%")
+        expect(page).to have_button("Edit")
+        expect(page).to have_button("Delete")
       end
     end
 

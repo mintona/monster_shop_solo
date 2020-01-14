@@ -9,4 +9,7 @@ class Coupon < ApplicationRecord
   validates_numericality_of :percent, greater_than: 0
   validates_numericality_of :percent, less_than_or_equal_to: 100
 
+  def never_applied?
+    orders.empty?
+  end
 end
