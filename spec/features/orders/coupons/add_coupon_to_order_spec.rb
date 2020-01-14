@@ -81,13 +81,6 @@ RSpec.describe "As a user" do
               expect(page).to have_content("Discounted Total: $21.60")
               expect(page).to have_content("Coupon Applied: #{@coupon_1.code}, #{@coupon_1.percent}% Off")
             end
-
-            xit "merchant sees coupon info " do
-
-            end
-
-            xit "admin seens coupon info " do
-            end
           end
         end
       end
