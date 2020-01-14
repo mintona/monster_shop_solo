@@ -53,12 +53,13 @@ RSpec.describe "As a user" do
           # click_button 'Create Order'
         end
 
-        it "I click the Create Order button and am redirected to my orders index where I see the order and its coupon" do
+        it "I click the Create Order button, the order stores the coupon, and am redirected to my orders index where I see the order and its coupon" do
           click_button 'Create Order'
 
           order = Order.last
+
           expect(order.coupon).to eq(@coupon_1)
-#send hidden params through button 
+
           expect(current_path).to eq(profile_orders_path)
 
           within "#order-#{order.id}" do
@@ -66,8 +67,13 @@ RSpec.describe "As a user" do
             expect(page).to have_content("Discounted Total: $21.60")
             expect(page).to have_content("Coupon Applied: #{@coupon_1.code}, #{@coupon_1.percent}% Off")
           end
-
         end
+
+        # describe "After my order has been placed" do
+        #   describe "when I visit an order show page" do
+        #
+        #   end
+        # end
       end
     end
   end
