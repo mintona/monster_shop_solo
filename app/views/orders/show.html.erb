@@ -45,8 +45,12 @@
 </table>
 
 <section id="grandtotal">
-  <p>Grand Total: <%=number_to_currency(@order.grandtotal)%></p>
+  <p>Grand Total: <%= number_to_currency(@order.grandtotal) %></p>
 </section>
+<% if @order.coupon %>
+  <p>Discounted Total: <%= number_to_currency(@order.discounted_total) %> </p>
+  <p>Coupon Applied: <%= @order.coupon.code %>, <%= number_to_percentage(@order.coupon.percent, precision: 0) %> Off</p>
+<% end %>
 <section id="datecreated">
   <p>Item Total:<%= @order.total_items %></p>
 </section>
