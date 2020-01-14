@@ -46,23 +46,22 @@
           </tr>
         <% end %>
       </table>
-        <p>Total: <%= number_to_currency(cart.total) %></p>
-        <% if current_coupon %>
-          <p>Coupon Applied: <%= current_coupon.code %></p>
-          <p>Discounted Total: <%= number_to_currency(cart.discounted_total(current_coupon.merchant_id, current_coupon.percent)) %></p>
-        <% end %>
-        <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
-          <% if current_user %>
-            <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
-            <section id = "apply-coupon">
-              <%= form_tag "/coupon", method: :post %>
-                <%= label_tag :code %>
-                <%= text_field_tag :code %>
-
-                <%# <%= hidden_field_tag 'passenger_id', @passenger.id %> %>
-
-                <%= submit_tag 'Submit' %>
-              <% end %>
-          </section>
+      <p>Total: <%= number_to_currency(cart.total) %></p>
+      <% if current_coupon %>
+        <p>Coupon Applied: <%= current_coupon.code %></p>
+        <p>Discounted Total: <%= number_to_currency(cart.discounted_total(current_coupon.merchant_id, current_coupon.percent)) %></p>
       <% end %>
+      <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
+      <% if current_user %>
+        <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
+      <% end %>
+      <section id = "apply-coupon">
+        <p>Have a coupon code? Enter it below! P.S. Coupon codes are case sensitive!</p>
+        <%= form_tag "/coupon", method: :post %>
+          <%= label_tag :code %>
+          <%= text_field_tag :code %>
+
+          <%= submit_tag 'Submit' %>
+        <% end %>
+      </section>
     </center>
