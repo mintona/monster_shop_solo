@@ -55,6 +55,13 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
+
+      it "I have a field to apply a coupon" do
+        visit '/cart'
+
+        expect(page).to have_field('Code')
+        expect(page).to have_button('Submit')
+      end
     end
   end
 
@@ -72,7 +79,7 @@ RSpec.describe 'Cart show' do
       end
     end
   end
-  
+
     describe "i can increment/decrement items" do
       it "increments (only to inventory limit) and decrements to zero" do
         mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
