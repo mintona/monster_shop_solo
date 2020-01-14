@@ -20,6 +20,10 @@
   <% end %>
 </table>
 <h3 align = "right">Total: <%= number_to_currency(cart.total)%></h3>
+<% if current_coupon %>
+  <h3 align = "right">Discounted Total: <%= number_to_currency(cart.discounted_total(current_coupon.merchant_id, current_coupon.percent))%></h3>
+  <h3 align = "right">Coupon Applied: <%= current_coupon.code %>, <%= number_to_percentage(current_coupon.percent, precision: 0) %> Off</h3>
+<% end %>
 <center>
   <h2>Shipping Info:</h2>
   <%= form_tag "/profile/orders", method: :post do %>
