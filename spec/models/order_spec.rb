@@ -19,32 +19,42 @@ describe Order, type: :model do
 
   describe 'instance methods' do
     before :each do
-      @user = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_email_test', password: 'pp', password_confirmation: 'pp', role: 0)
+      user = User.create(name: 'user', address: 'user_address', city: 'user_city', state: 'user_state', zip: 12345, email: 'user_email_test', password: 'pp', password_confirmation: 'pp', role: 0)
 
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
-      @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
-      @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      @pull_toy = brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
-      @user.orders.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
-      @order_1 = Order.last
-      @item_order_1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @item_order_2 = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
-
+      @order_1 = user.orders.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
 
       @user_1 = create(:user, role: 0)
-      @user_2 = create(:user, role: 0)
-      @user_3 = create(:user, role: 0)
+      user_2 = create(:user, role: 0)
+      user_3 = create(:user, role: 0)
 
       @order_2 = create(:order, created_at: Date.today, user: @user_1, status: 3)
-      @order_3 = create(:order, created_at: Date.today, user: @user_2, status: 1)
-      @order_4 = create(:order, created_at: Date.today, user: @user_3, status: 2)
+      @order_3 = create(:order, created_at: Date.today, user: user_2, status: 1)
+      @order_4 = create(:order, created_at: Date.today, user: user_3, status: 2)
       @order_5 = create(:order, created_at: Date.today, user: @user_1, status: 0)
     end
 
     it 'grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
+    end
+
+    it 'discounted_total' do
+      bike = @meg.items.create(name: "Stump Jumper", description: "Best bike ever!", price: 1000, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+
+      @order_1.item_orders.create!(item: bike, price: bike.price, quantity: 1)
+
+      coupon_1 = create(:coupon, percent: 50, merchant: @meg)
+
+      coupon_1.orders << @order_1
+
+      expect(@order_1.discounted_total).to eq(630)
     end
 
     it 'total_items' do

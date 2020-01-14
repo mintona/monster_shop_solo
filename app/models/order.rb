@@ -3,7 +3,7 @@ class Order <ApplicationRecord
 
   belongs_to :user
   belongs_to :coupon, optional: true
-  
+
   has_many :item_orders
   has_many :items, through: :item_orders
 
@@ -11,6 +11,13 @@ class Order <ApplicationRecord
 
   def grandtotal
     item_orders.sum('price * quantity')
+  end
+
+  def discounted_total
+    percent_discount = coupon.percent/100.to_f
+    ids = items.where(merchant_id: coupon.merchant_id).pluck(:id)
+    dollars_off = item_orders.where(item_id: ids).sum("price * quantity * #{percent_discount}")
+    grandtotal - dollars_off
   end
 
   def total_items

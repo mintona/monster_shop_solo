@@ -14,13 +14,19 @@ class OrdersController <ApplicationController
   def create
     order = current_user.orders.create(order_params)
     if order.save
-      cart.items.each do |item,quantity|
-        order.item_orders.create({
-          item: item,
-          quantity: quantity,
-          price: item.price
-          })
-      end
+      # cart.items.each do |item,quantity|
+      #   order.item_orders.create({
+      #     item: item,
+      #     quantity: quantity,
+      #     price: item.price
+      #     })
+      # end
+      create_item_orders(order)
+      # if current_coupon
+      #   current_coupon.orders << order
+      #   session.delete(:current_coupon)
+      # end
+      apply_coupon(order)
       session.delete(:cart)
       flash[:success] = "Order created!"
       redirect_to "/profile/orders"
@@ -64,6 +70,23 @@ class OrdersController <ApplicationController
       order.items.each do |item|
         quantity = item.quantity_ordered(order)
         item.increase_item_inventory(quantity)
+      end
+    end
+
+    def create_item_orders(order)
+      cart.items.each do |item,quantity|
+        order.item_orders.create({
+          item: item,
+          quantity: quantity,
+          price: item.price
+          })
+      end
+    end
+
+    def apply_coupon(order)
+      if current_coupon
+        current_coupon.orders << order
+        session.delete(:current_coupon)
       end
     end
 end

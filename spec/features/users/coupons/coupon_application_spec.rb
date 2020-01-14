@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "As a in user" do
+RSpec.describe "As a user", type: :feature do
   describe "when I have added items to my cart and visit the cart show page" do
     before :each do
       @user = create(:user)
@@ -29,7 +29,7 @@ RSpec.describe "As a in user" do
       have_button 'Submit'
     end
 
-    it "if I enter a valid coupon code and click submit I am alerted that coupon is now applied to my order" do
+    it "if I enter a valid coupon code and click submit I am alerted that coupon is now applied to my cart" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       visit cart_path
@@ -42,7 +42,7 @@ RSpec.describe "As a in user" do
       end
 
       expect(current_path).to eq(cart_path)
-      expect(page).to have_content("#{@coupon_1.code} has been applied to your order.")
+      expect(page).to have_content("#{@coupon_1.code} has been applied to your cart.")
 
       expect(page).to have_content("Total: $27.00")
       expect(page).to have_content("Discounted Total: $21.60")
@@ -74,7 +74,7 @@ RSpec.describe "As a in user" do
       end
 
       expect(current_path).to eq(cart_path)
-      expect(page).to have_content("#{@coupon_1.code} has been applied to your order.")
+      expect(page).to have_content("#{@coupon_1.code} has been applied to your cart.")
 
       expect(page).to have_content("Total: $57.00")
       expect(page).to have_content("Discounted Total: $51.60")
@@ -128,7 +128,7 @@ RSpec.describe "As a in user" do
         end
 
         expect(current_path).to eq(cart_path)
-        expect(page).to have_content("#{@coupon_1.code} has been applied to your order.")
+        expect(page).to have_content("#{@coupon_1.code} has been applied to your cart.")
 
         expect(page).to have_content("Total: $27.00")
         expect(page).to have_content("Discounted Total: $21.60")
@@ -192,7 +192,7 @@ RSpec.describe "As a in user" do
         click_button 'Submit'
       end
 
-      expect(page).to have_content("#{@coupon_1.code} has been applied to your order.")
+      expect(page).to have_content("#{@coupon_1.code} has been applied to your cart.")
 
       click_link 'Log Out'
 
@@ -213,7 +213,7 @@ RSpec.describe "As a in user" do
       end
 
       visit cart_path
-      expect(page).to_not have_content("#{@coupon_1.code} has been applied to your order.")
+      expect(page).to_not have_content("#{@coupon_1.code} has been applied to your cart.")
     end
   end
 
