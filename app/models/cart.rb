@@ -32,6 +32,18 @@ class Cart
     end
   end
 
+  def discounted_total(merchant_id, percent)
+    multiplier = (100 - percent)/100.to_f
+    @contents.sum do |item_id,quantity|
+      item = Item.find(item_id)
+      if item.merchant_id == merchant_id
+        item.price * multiplier * quantity
+      else
+        item.price * quantity
+      end
+    end
+  end
+
   def add_quantity(item_id)
     @contents[item_id] += 1
   end
