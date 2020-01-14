@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "As a in user" do
-  # test for visitor?
   describe "when I have added items to my cart and visit the cart show page" do
     before :each do
       @user = create(:user)
@@ -52,9 +51,9 @@ RSpec.describe "As a in user" do
 
     it "The coupon code I enter is only applied to that merchant's items" do
       store_2 = create(:merchant)
-      @item_4 = create(:item, inventory: 20, price: 10, merchant: store_2) #14
-      @item_5 = create(:item, inventory: 25, price: 10, merchant: store_2) #15
-      @item_6 = create(:item, inventory: 30, price: 10, merchant: store_2) #16
+      @item_4 = create(:item, inventory: 20, price: 10, merchant: store_2)
+      @item_5 = create(:item, inventory: 25, price: 10, merchant: store_2)
+      @item_6 = create(:item, inventory: 30, price: 10, merchant: store_2)
 
       store_2_items = [@item_4, @item_5, @item_6]
 
@@ -112,8 +111,6 @@ RSpec.describe "As a in user" do
       expect(page).to have_button 'Submit'
       expect(page).to have_content("The coupon code you have entered does not exist. Please try again.")
     end
-
-#TEST FOR LOGGING OUT AND NOT COMING BACK TO A COUPON ALREADY LOGGED IN.
 
     describe "and I have already entered and submitted a coupon code" do
       it "I can enter a new coupon which will replace the one I entered previously" do
