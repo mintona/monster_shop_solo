@@ -14,22 +14,10 @@ class Order <ApplicationRecord
   end
 
   def discounted_total
-    # item_orders = self.item_orders
-    # items_matching_coupon_merchant = items.where(merchant_id: coupon.merchant_id)
+    percent_discount = coupon.percent/100.to_f
     ids = items.where(merchant_id: coupon.merchant_id).pluck(:id)
-    multiplier = (100 - coupon.percent)/100.to_f
-    # item_orders_with_discounted_items = item_orders.where(item_id: ids)
-    # regular_total = item_orders_with_discounted_items.sum('price * quantity')
-    regular_total = item_orders.where(item_id: ids).sum('price * quantity')
-    discounted_total = regular_total * multiplier
-
-    dollars_off = regular_total - discounted_total
-    # discounted_total = item_orders.where(item_id: ids).sum('price * quantity') * multiplier
-    # grandtotal - discounted_total
+    dollars_off = item_orders.where(item_id: ids).sum("price * quantity * #{percent_discount}")
     grandtotal - dollars_off
-    # require "pry"; binding.pry
-
-# require "pry"; binding.pry
   end
 
   def total_items
