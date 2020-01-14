@@ -69,11 +69,20 @@ RSpec.describe "As a user" do
           end
         end
 
-        # describe "After my order has been placed" do
-        #   describe "when I visit an order show page" do
-        #
-        #   end
-        # end
+        describe "After my order has been placed with a coupon" do
+          describe "when I visit an order show page" do
+            it "I see the coupon that was used and the discounted price" do
+              click_button 'Create Order'
+
+              order = Order.last
+
+              visit "/profile/orders/#{order.id}"
+              
+              expect(page).to have_content("Discounted Total: $21.60")
+              expect(page).to have_content("Coupon Applied: #{@coupon_1.code}, #{@coupon_1.percent}% Off")
+            end
+          end
+        end
       end
     end
   end
