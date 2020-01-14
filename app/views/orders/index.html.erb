@@ -8,7 +8,9 @@
     <p>Order Status: <%= order.status %></p>
     <p>Number Of All Items: <%= order.items.count %></p>
     <p>Total Price Of All Items: <%= number_to_currency(order.grandtotal) %></p>
-    <p>Discounted Total: <% number_to_currency(order.discounted_total)%></p>
-    <p>Coupon Applied: <% order.coupon.code %></p>
+    <% if order.coupon %>
+      <p>Discounted Total: <%= number_to_currency(order.discounted_total)%></p>
+      <p>Coupon Applied: <%= order.coupon.code %>, <%= number_to_percentage(order.coupon.percent, precision: 0) %> Off</p>
+    <% end %>
   </section>
 <% end %>
