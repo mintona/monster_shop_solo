@@ -1,67 +1,56 @@
 <h1>Cart</h1>
 
-  <% if @items.empty? %>
-    <h3 align= "center">Cart is currently empty</h3>
-  <% else %>
-    <center>
-      <table class = "cart-items">
-        <tr>
-          <th>Item</th>
-          <th>Sold By</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-        </tr>
-        <% @items.each do |item,quantity| %>
-          <tr id= "cart-item-<%=item.id%>">
-            <td>
-              <p align = "center">
-                <span>
-                  <img align = "center" id="cart-image" src= <%= item.image %>>
-                  <%=link_to item.name, "/items/#{item.id}" %>
-                </span>
-              </p>
-            </td>
-            <td>
-              <p align = "center">
-                <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}"%>
-              </p>
-            </td>
-            <td>
-              <p><%=number_to_currency(item.price)%></p>
-            </td>
-            <td>
-              <center>
-                <p>
-                <%= button_to 'Increase', "/cart/#{item.id}?increment_decrement=increment", method: :patch %>
-                <%=quantity%>
-                <%= button_to 'Decrease', "/cart/#{item.id}?increment_decrement=decrement", method: :patch %>
-                </p>
-                <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
-              </center>
-            </td>
-            <td>
-              <p><%=number_to_currency(cart.subtotal(item))%></p>
-            </td>
-          </tr>
+<% if !@items.empty? %>
+<center>
+<table class = "cart-items">
+  <tr>
+    <th>Item</th>
+    <th>Sold By</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Subtotal</th>
+  </tr>
+  <% @items.each do |item,quantity| %>
+    <tr id= "cart-item-<%=item.id%>">
+      <td>
+        <p align = "center">
+          <span>
+            <img align = "center" id="cart-image" src= <%= item.image %>>
+            <%=link_to item.name, "/items/#{item.id}" %>
+          </span>
+        </p>
+      </td>
+      <td>
+        <p align = "center">
+          <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}"%>
+        </p>
+      </td>
+      <td>
+        <p><%=number_to_currency(item.price)%></p>
+      </td>
+      <td>
+        <center>
+          <p>
+          <%= button_to 'Increase', "/cart/#{item.id}?increment_decrement=increment", method: :patch %>
+          <%=quantity%>
+          <%= button_to 'Decrease', "/cart/#{item.id}?increment_decrement=decrement", method: :patch %>
+          </p>
+          <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
+        </center>
+        </td>
+      <td>
+        <p><%=number_to_currency(cart.subtotal(item))%></p>
+    </td>
+    </tr>
+  <% end %>
+</table>
+  <p>Total: <%= number_to_currency(cart.total) %></p>
+  <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
+    <% if current_user %>
+      <p><%= link_to "Checkout", "/orders/new", method: :get %></p
         <% end %>
-      </table>
-      <p>Total: <%= number_to_currency(cart.total) %></p>
-      <% if current_coupon %>
-        <p>Coupon Applied: <%= current_coupon.code %></p>
-        <p>Discounted Total: <%= number_to_currency(cart.discounted_total(current_coupon.merchant_id, current_coupon.percent)) %></p>
-      <% end %>
-      <p><%= link_to "Empty Cart", "/cart", method: :delete %></p>
-      <% if current_user %>
-        <p><%= link_to "Checkout", "/orders/new", method: :get %></p>
-      <% end %>
-      <section id = "apply-coupon">
-        <p>Have a coupon code? Enter it below! P.S. Coupon codes are case sensitive!</p>
-        <%= form_tag "/coupon", method: :post %>
-          <%= label_tag :code %>
-          <%= text_field_tag :code %>
-
-          <%= submit_tag 'Submit' %>
-        <% end %>
-      </section>
-    </center>
+<% else %>
+  <h3 align= "center">Cart is currently empty</h3>
+<% end %>
+<table>
+</center>
