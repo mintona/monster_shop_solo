@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "As a in user" do
+RSpec.describe "As a user" do
   describe "when I have added items to my cart and visit the cart show page" do
     before :each do
       @user = create(:user)
