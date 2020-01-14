@@ -7,16 +7,11 @@ RSpec.describe "As a in user" do
       @user = create(:user)
 
       @store_1 = create(:merchant)
-      # @merchant = create(:user, role: 1, merchant: store)
-
       @coupon_1 = create(:coupon, percent: 20, merchant: @store_1)
 
-      # @order = create(:order, user: @user)
-
-      @item_1 = create(:item, inventory: 20, price: 9, merchant: @store_1) #11
-      @item_2 = create(:item, inventory: 25, price: 9, merchant: @store_1) #12
-      @item_3 = create(:item, inventory: 30, price: 9, merchant: @store_1) #13
-
+      @item_1 = create(:item, inventory: 20, price: 9, merchant: @store_1)
+      @item_2 = create(:item, inventory: 25, price: 9, merchant: @store_1)
+      @item_3 = create(:item, inventory: 30, price: 9, merchant: @store_1)
 
       items = [@item_1, @item_2, @item_3]
 
@@ -24,22 +19,15 @@ RSpec.describe "As a in user" do
         visit "/items/#{item.id}"
         click_on "Add To Cart"
       end
-      # @order.item_orders.create(item: @item_1, quantity: 10, price: @item_1.price)
-      # @order.item_orders.create(item: @item_2, quantity: 10, price: @item_2.price)
-      # @order.item_orders.create(item: @item_3, quantity: 10, price: @item_3.price)
-
-      # allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
-#Add test for when there are no items in the cart
+
     it "I see a box where I can enter my coupon code" do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
 
       visit cart_path
 
-      within "#apply-coupon" do
-        find_field "Code"
-        have_button 'Submit'
-      end
+      find_field "Code"
+      have_button 'Submit'
     end
 
     it "if I enter a valid coupon code and click submit I am alerted that coupon is now applied to my order" do
