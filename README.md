@@ -129,6 +129,7 @@ We used enums in our User model to differentiate user type. Different types of u
 * Checkout their cart by creating an order
 * View all of their orders and the order's individual show page
 * Cancel an order that has the status of "pending"
+* Apply a coupon to their order
 
 #### Restrictions
 * They cannot visit any path starting with "/admin" or "/merchant", attempting will result in a 404 error
@@ -143,11 +144,13 @@ We used enums in our User model to differentiate user type. Different types of u
 * Enable and disable items in their shop
 * Delete items that have never been ordered
 * Fulfill items from their shop in a consumer's order (the last item to be fulfilled updates the order status to "packaged")
+* Create, edit, update, destroy, enable/disable coupons for the merchant they work for
 
 #### Restrictions
 * They cannot visit any path starting with "/admin"
 * They cannot edit the details of the store they work at
 * They cannot edit a user's information, password, or cancel an order
+* They can only add a new coupon if they have less than 5 active coupons in the system
 
 ### Admin
 * Admins have the most permissions of any user and can perform nearly all actions on behalf of a default user or merchant employee.
@@ -211,6 +214,13 @@ class MerchantShow
   end
 
 ```
+
+## Coupons
+Users have the ability to add a coupon code to their order prior to checkout. They can override the last coupon code by entering a new one, but the last one to be entered is what will be used at checkout. Only one coupon code can be used per order, and the discount only applies to the items from the store that issued the coupon.
+
+Merchants have full CRUD functionality over coupons, however, they are limited to only creating new coupons if their store has less than 5 active coupons in the system. Merchant users can also enable/disable coupons.
+
+When a coupon is applied to a cart or an order, both the original total and the discounted total are shown on the cart and order show pages, as well as the user order index page. 
 
 
 ## Flash Notifications
