@@ -11,6 +11,9 @@ RSpec.describe 'As an Admin', type: :feature do
     @item_order_1 = @order.item_orders.create(item: @item_1, quantity: 10, price: @item_1.price)
     @order.item_orders.create(item: @item_2, quantity: 10, price: @item_2.price)
     @order.item_orders.create(item: @item_3, quantity: 10, price: @item_3.price)
+    @coupon = create(:coupon, merchant: @item_1.merchant)
+
+    @coupon.orders << @order
 
     email = @admin.email
     password = @admin.password
@@ -32,6 +35,9 @@ RSpec.describe 'As an Admin', type: :feature do
     expect(page).to have_content("#{@order.created_at}")
     expect(page).to have_content("#{@order.updated_at}")
     expect(page).to have_content("#{@order.status}")
+    expect(page).to have_content(@coupon.code)
+    expect(page).to have_content("Coupon Applied: #{@coupon.code}, #{@coupon.percent}% Off")
+
 
     within "#item-#{@item_1.id}" do
       expect(page).to have_content("#{@item_1.name}")
