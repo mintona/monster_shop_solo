@@ -9,8 +9,8 @@
 ItemOrder.destroy_all
 Order.destroy_all
 User.destroy_all
-Coupon.destroy_all
 Merchant.destroy_all
+Coupon.destroy_all
 Item.destroy_all
 #need to add something about destroying coupons... lots of dependencies here!
 
