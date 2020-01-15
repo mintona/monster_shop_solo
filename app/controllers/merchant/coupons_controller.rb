@@ -15,10 +15,10 @@ class Merchant::CouponsController < Merchant::BaseController
     merchant = Merchant.find(current_user.merchant_id)
     @coupon = merchant.coupons.new(coupon_params)
 
-    if merchant.less_than_five_coupons?
+    if merchant.less_than_five_active_coupons?
       attempt_coupon_creation(@coupon)
     else
-      flash[:error] = "You already have 5 coupons. You must delete a coupon and try again."
+      flash[:error] = "You already have 5 coupons. You must disable or delete a coupon and try again."
       render :new
     end
   end
@@ -28,14 +28,12 @@ class Merchant::CouponsController < Merchant::BaseController
   end
 
   def update
-    @coupon = Coupon.find(params[:format])
-
-    if @coupon.update(coupon_params)
-      flash[:success] = "Coupon has been updated!"
-      redirect_to merchant_coupons_path
+    if info_update?
+      @coupon = Coupon.find(params[:format])
+      attempt_info_update(@coupon)
     else
-      flash[:error] = "#{@coupon.errors.full_messages.to_sentence}. Please try again."
-      render :edit
+      @coupon = Coupon.find(params[:id])
+      update_status(@coupon)
     end
   end
 
@@ -59,5 +57,30 @@ class Merchant::CouponsController < Merchant::BaseController
         flash[:error] = "#{@coupon.errors.full_messages.to_sentence}. Please try again."
         render :new
       end
+    end
+
+    def info_update?
+      params[:status].nil?
+    end
+
+    def attempt_info_update(coupon)
+      if coupon.update(coupon_params)
+        flash[:success] = "Coupon has been updated!"
+        redirect_to merchant_coupons_path
+      else
+        flash[:error] = "#{coupon.errors.full_messages.to_sentence}. Please try again."
+        render :edit
+      end
+    end
+
+    def update_status(coupon)
+      if params[:status] == "deactivate"
+        coupon.deactivate
+        flash[:success] = "Coupon is unavailable for use."
+      elsif params[:status] == "activate"
+        coupon.activate
+        flash[:success] = "Coupon is now available for use."
+      end
+      redirect_to merchant_coupons_path
     end
 end

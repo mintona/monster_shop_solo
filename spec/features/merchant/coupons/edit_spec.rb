@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "As a merchant I can edit an existing coupon" do
   before :each do
-    store = create(:merchant)
-    @merchant = create(:user, role: 1, merchant: store)
-    @coupon_1 = create(:coupon, merchant: store)
+    @store = create(:merchant)
+    @merchant = create(:user, role: 1, merchant: @store)
+    @coupon_1 = create(:coupon, merchant: @store)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
   end
@@ -67,7 +67,7 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
         fill_in "Percent", with: new_percent
 
         click_button 'Update Coupon'
-#these are pre populated with whatever you tried to answer even if it wasn't acceptable...
+
         expect(find_field('Name').value).to eq(new_name)
         expect(find_field('Code').value).to eq(new_code)
         expect(find_field('Percent').value).to eq("#{new_code}")
@@ -77,7 +77,6 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
       end
 
       it "I am alerted if I try to enter anything except number in the percent field" do
-        # is this really necessary if it's  a form_for number field that actally will NOT let you type a letter in the browser?
         new_percent = "thirty"
 
         visit edit_merchant_coupon_path(@coupon_1.id)
@@ -139,6 +138,65 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
 
         expect(page).to have_button("Update Coupon")
         expect(page).to have_content("Percent must be less than or equal to 100. Please try again.")
+      end
+    end
+
+    describe "I can change a coupons status" do
+      before :each do
+        @coupon_2 = create(:coupon, merchant: @store)
+        @coupon_3 = create(:coupon, merchant: @store)
+      end
+
+      describe "from active to inactive" do
+        it "by clicking its disable button" do
+          visit merchant_coupons_path
+
+          within "#coupon-#{@coupon_1.id}" do
+            expect(page).to have_button('Disable')
+          end
+
+          within "#coupon-#{@coupon_2.id}" do
+            expect(page).to have_button('Disable')
+          end
+
+          within "#coupon-#{@coupon_3.id}" do
+            click_button 'Disable'
+          end
+
+          expect(current_path).to eq(merchant_coupons_path)
+          expect(page).to have_content("Coupon is unavailable for use.")
+
+          within "#coupon-#{@coupon_3.id}" do
+            expect(page).to_not have_button('Disable')
+            expect(page).to have_button('Enable')
+            expect(page).to have_content("Status: Inactive")
+          end
+        end
+      end
+
+      describe "inactive to active" do
+        it "by clicking its enable button" do
+
+          visit merchant_coupons_path
+
+          within "#coupon-#{@coupon_3.id}" do
+            click_button 'Disable'
+          end
+
+          within "#coupon-#{@coupon_3.id}" do
+            click_button 'Enable'
+          end
+
+          expect(current_path).to eq(merchant_coupons_path)
+          expect(page).to have_content("Coupon is now available for use.")
+
+          within "#coupon-#{@coupon_3.id}" do
+            expect(page).to_not have_button('Enable')
+            expect(page).to have_button('Disable')
+            expect(page).to have_content("Status: Active")
+
+          end
+        end
       end
     end
   end

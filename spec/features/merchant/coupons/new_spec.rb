@@ -50,8 +50,6 @@ RSpec.describe "As a merchant I can create a new coupon" do
 
         expect(current_path).to eq(merchant_coupons_path)
         expect(page).to have_content("Coupon has been added!")
-        expect(page).to_not have_content("You already have 5 coupons. You must delete a coupon and try again.")
-
 
         within "#coupon-#{coupon.id}" do
           expect(page).to have_link(name)
@@ -82,7 +80,6 @@ RSpec.describe "As a merchant I can create a new coupon" do
       end
 
       it "I am alerted if I try to enter anything except number in the percent field" do
-        # is this really necessary if it's  a form_for number field that actally will NOT let you type a letter in the browser?
         name = "Winter Blowout"
         code = "WINTER 2020"
         percent = "thirty"
@@ -196,8 +193,8 @@ RSpec.describe "As a merchant I can create a new coupon" do
         expect(page).to have_content("Percent must be less than or equal to 100. Please try again.")
       end
 
-      describe "I can only have 5 coupons in the system" do
-        it "alerts me if I try to add more than 5 coupons" do
+      describe "I can only have 5 active coupons in the system" do
+        it "alerts me if I try to add a 6th coupon when I have five active" do
         coupon_1 = Coupon.create!(name: "Winter Blowout",
                                   code: "WINTER 2020",
                                   percent: 50,
@@ -231,8 +228,49 @@ RSpec.describe "As a merchant I can create a new coupon" do
 
         click_button 'Create Coupon'
 
-        expect(page).to have_content("You already have 5 coupons. You must delete a coupon and try again.")
+        expect(page).to have_content("You already have 5 coupons. You must disable or delete a coupon and try again.")
         expect(page).to have_button('Create Coupon')
+      end
+
+      it "allows me to add a new coupon if I have 5 total but less than 5 active" do
+        coupon_1 = Coupon.create!(name: "Winter Blowout",
+                                  code: "WINTER 2020",
+                                  percent: 50,
+                                  merchant: @store)
+
+        coupon_2 = Coupon.create!(name: "Spring Sale",
+                                  code: "SPRING",
+                                  percent: 50,
+                                  merchant: @store)
+
+        coupon_3 = Coupon.create!(name: "Summer Sale ",
+                                  code: "SUMMER  2020",
+                                  percent: 50,
+                                  merchant: @store)
+
+        coupon_4 = Coupon.create!(name: "Fall Sale",
+                                  code: "FALL 2020 ",
+                                  percent: 50,
+                                  merchant: @store)
+
+        coupon_5 = Coupon.create!(name: "Labor Day Sale",
+                                  code: "LABORDAY 2020",
+                                  percent: 50,
+                                  merchant: @store,
+                                  active?: false)
+
+        visit new_merchant_coupon_path
+
+        fill_in "Name", with: "Newest Coupon"
+        fill_in "Code", with: "Newest Code"
+        fill_in "Percent", with: 20
+
+        click_button 'Create Coupon'
+
+        expect(current_path).to eq(merchant_coupons_path)
+
+        expect(page).to_not have_content("You already have 5 coupons. You must disable or delete a coupon and try again.")
+        expect(page).to have_content("Coupon has been added!")
       end
     end
     end

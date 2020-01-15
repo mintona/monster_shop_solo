@@ -30,7 +30,7 @@ class Merchant <ApplicationRecord
     Order.where(status: "pending").joins(:items).where("items.merchant_id = #{self.id}").distinct
   end
 
-  def less_than_five_coupons?
-    coupons.count < 5
+  def less_than_five_active_coupons?
+    coupons.where(active?: true).count < 5
   end
 end
