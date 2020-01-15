@@ -14,6 +14,12 @@
             <p>Code: <%= coupon.code %> </p>
             <p>Discount Percentage: <%= number_to_percentage(coupon.percent, precision: 0) %> </p>
             <center> <%= button_to 'Edit', edit_merchant_coupon_path(coupon.id), method: :get %> </center>
+            <% if coupon.active? %>
+              <center> <%= button_to 'Disable', merchant_coupon_path(coupon.id), method: :patch, params: {status: "deactivate"} %> </center>
+            <% else %>
+              <center> <%= button_to 'Enable', merchant_coupon_path(coupon.id), method: :patch, params: {status: "activate"} %> </center>
+
+            <% end %>
             <% if coupon.never_applied? %>
               <center> <%= button_to 'Delete', merchant_coupon_path(coupon.id), method: :delete %> </center>
             <% end %>
