@@ -8,7 +8,7 @@ class Merchant <ApplicationRecord
   has_many :items, dependent: :destroy
   has_many :item_orders, through: :items
   has_many :users
-  has_many :coupons
+  has_many :coupons, dependent: :destroy
 
   def no_orders?
     item_orders.empty?
@@ -28,5 +28,9 @@ class Merchant <ApplicationRecord
 
   def pending_orders
     Order.where(status: "pending").joins(:items).where("items.merchant_id = #{self.id}").distinct
+  end
+
+  def less_than_five_coupons?
+    coupons.count < 5
   end
 end

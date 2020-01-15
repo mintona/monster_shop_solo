@@ -78,5 +78,19 @@ describe Merchant, type: :model do
 
       expect(@meg.pending_orders).to eq([order_1])
     end
+
+    it 'less_than_five_coupons?' do
+      coupon_1 = create(:coupon, merchant: @meg)
+      coupon_2 = create(:coupon, merchant: @meg)
+      coupon_3 = create(:coupon, merchant: @meg)
+      coupon_4 = create(:coupon, merchant: @meg)
+
+      expect(@meg.less_than_five_coupons?).to eq(true)
+
+      coupon_4 = create(:coupon, merchant: @meg)
+
+      expect(@meg.less_than_five_coupons?).to eq(false)
+
+    end
   end
 end
