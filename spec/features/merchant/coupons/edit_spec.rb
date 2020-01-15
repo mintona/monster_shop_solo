@@ -67,7 +67,7 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
         fill_in "Percent", with: new_percent
 
         click_button 'Update Coupon'
-#these are pre populated with whatever you tried to answer even if it wasn't acceptable...
+
         expect(find_field('Name').value).to eq(new_name)
         expect(find_field('Code').value).to eq(new_code)
         expect(find_field('Percent').value).to eq("#{new_code}")
@@ -77,7 +77,6 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
       end
 
       it "I am alerted if I try to enter anything except number in the percent field" do
-        # is this really necessary if it's  a form_for number field that actally will NOT let you type a letter in the browser?
         new_percent = "thirty"
 
         visit edit_merchant_coupon_path(@coupon_1.id)
