@@ -27,7 +27,7 @@ RSpec.describe "As a merchant I can create a new coupon" do
     end
 
     describe "and click the link to Create New coupon" do
-      it "I can add a new coupon by filling out the form entirely" do
+      it "I can add a new coupon if I have less than 5 coupons by filling out the form entirely" do
         name = "Winter Blowout"
         code = "WINTER 2020"
         percent = 30
