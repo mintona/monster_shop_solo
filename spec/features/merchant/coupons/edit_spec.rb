@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe "As a merchant I can edit an existing coupon" do
   before :each do
-    store = create(:merchant)
-    @merchant = create(:user, role: 1, merchant: store)
-    @coupon_1 = create(:coupon, merchant: store)
+    @store = create(:merchant)
+    @merchant = create(:user, role: 1, merchant: @store)
+    @coupon_1 = create(:coupon, merchant: @store)
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
   end
@@ -139,6 +139,44 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
 
         expect(page).to have_button("Update Coupon")
         expect(page).to have_content("Percent must be less than or equal to 100. Please try again.")
+      end
+    end
+
+    describe "I can change a coupons status" do
+      before :each do
+        @coupon_2 = create(:coupon, merchant: @store)
+        @coupon_3 = create(:coupon, merchant: @store)
+      end
+
+      describe "from active to inactive" do
+        it "by clicking its disable button" do
+          visit merchant_coupons_path
+
+          within "#coupon-#{@coupon_1.id}" do
+            expect(page).to have_button('Disable')
+          end
+
+          within "#coupon-#{@coupon_2.id}" do
+            expect(page).to have_button('Disable')
+          end
+
+          within "#coupon-#{@coupon_3.id}" do
+            click_button 'Disable'
+          end
+
+          expect(current_path).to eq(merchant_coupons_path)
+
+          within "#coupon-#{@coupon_3.id}" do
+            expect(page).to_not have_button('Disable')
+            expect(page).to have_button('Enable')
+          end
+        end
+      end
+
+      describe "inactive to active" do
+        xit "by clicking its enable button" do
+
+        end
       end
     end
   end
