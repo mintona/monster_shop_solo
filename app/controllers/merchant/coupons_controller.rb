@@ -75,9 +75,9 @@ class Merchant::CouponsController < Merchant::BaseController
 
     def update_status(coupon)
       if params[:status] = "deactivate"
-        coupon.toggle!(:active?)
-      else
-        coupon.toggle!(:active?)
+        coupon.deactivate
+      elsif params[:status] = "activate"
+        coupon.activate
       end
       redirect_to merchant_coupons_path
     end
