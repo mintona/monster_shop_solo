@@ -14,10 +14,10 @@ class Coupon < ApplicationRecord
   end
 
   def deactivate
-    toggle!(:active?)
+    update(active?: false)
   end
 
   def activate
-    toggle!(:active?)
+    update(active?: true)
   end
 end
