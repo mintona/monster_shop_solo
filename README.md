@@ -271,7 +271,7 @@ The schema is depicted below:
 ![alt text](https://github.com/DavidBarriga-Gomez/monster_shop_part_1/blob/refactor/readme/Monster%20Shop%20DB%20Schema.png "Monster Shop Schema")
 
 ## Built With
-* Ruby on Rails - web framework (version)
+* Ruby on Rails - web framework
 * PostgresQL - database manager
 * Heorku - cloud platform for app hosting
 
