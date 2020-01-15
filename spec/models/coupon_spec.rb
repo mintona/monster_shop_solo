@@ -74,5 +74,15 @@ RSpec.describe Coupon do
         expect(coupon_1.active?).to eq(true)
       end
     end
+
+    describe "#status" do
+      it "returns the coupons status" do
+        coupon_1 = create(:coupon)
+        coupon_2 = create(:coupon, active?: false)
+
+        expect(coupon_1.status).to eq("Active")
+        expect(coupon_2.status).to eq("Inactive")
+      end
+    end
   end
 end

@@ -20,4 +20,9 @@ class Coupon < ApplicationRecord
   def activate
     update(active?: true)
   end
+
+  def status
+    return "Active" if active? == true
+    return "Inactive" if active? == false
+  end
 end
