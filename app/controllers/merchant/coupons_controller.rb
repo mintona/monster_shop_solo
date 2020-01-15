@@ -76,8 +76,10 @@ class Merchant::CouponsController < Merchant::BaseController
     def update_status(coupon)
       if params[:status] == "deactivate"
         coupon.deactivate
+        flash[:success] = "Coupon is unavailable for use."
       elsif params[:status] == "activate"
         coupon.activate
+        flash[:success] = "Coupon is now available for use."
       end
       redirect_to merchant_coupons_path
     end

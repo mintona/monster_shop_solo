@@ -164,10 +164,12 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
           end
 
           expect(current_path).to eq(merchant_coupons_path)
+          expect(page).to have_content("Coupon is unavailable for use.")
 
           within "#coupon-#{@coupon_3.id}" do
             expect(page).to_not have_button('Disable')
             expect(page).to have_button('Enable')
+            expect(page).to have_content("Status: Inactive")
           end
         end
       end
@@ -186,10 +188,13 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
           end
 
           expect(current_path).to eq(merchant_coupons_path)
+          expect(page).to have_content("Coupon is now available for use.")
 
           within "#coupon-#{@coupon_3.id}" do
             expect(page).to_not have_button('Enable')
             expect(page).to have_button('Disable')
+            expect(page).to have_content("Status: Active")
+
           end
         end
       end
