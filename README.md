@@ -275,7 +275,7 @@ The schema is depicted below:
 * PostgresQL - database manager
 * Heorku - cloud platform for app hosting
 
-## Authors:
+## Contributors:
 * [Alison Vermeil](https://github.com/mintona)
 * [Carleigh Crockett](https://github.com/Capleugh)
 * [David Barriga-Gomez](https://github.com/DavidBarriga-Gomez)
