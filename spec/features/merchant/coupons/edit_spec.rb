@@ -174,8 +174,29 @@ RSpec.describe "As a merchant I can edit an existing coupon" do
       end
 
       describe "inactive to active" do
-        xit "by clicking its enable button" do
+        it "by clicking its enable button" do
+          @coupon_3.toggle!(:active?)
 
+          visit merchant_coupons_path
+
+          within "#coupon-#{@coupon_1.id}" do
+            expect(page).to have_button('Disable')
+          end
+
+          within "#coupon-#{@coupon_2.id}" do
+            expect(page).to have_button('Disable')
+          end
+
+          within "#coupon-#{@coupon_3.id}" do
+            click_button 'Enable'
+          end
+
+          expect(current_path).to eq(merchant_coupons_path)
+
+          within "#coupon-#{@coupon_3.id}" do
+            expect(page).to_not have_button('Enable')
+            expect(page).to have_button('Disable')
+          end
         end
       end
     end
