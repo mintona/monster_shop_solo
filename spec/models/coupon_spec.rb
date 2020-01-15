@@ -4,12 +4,11 @@ RSpec.describe Coupon do
   describe "validations" do
     it {should validate_presence_of :name}
     it {should validate_uniqueness_of :name}
-    # this could have a limited number of characters
+
     it {should validate_presence_of :code}
     it {should validate_uniqueness_of :code}
 
     it {should validate_presence_of :percent}
-    #do you need to validate both presence of and numericality of?
     it {should validate_numericality_of(:percent).is_greater_than(0)}
     it {should validate_numericality_of(:percent).is_less_than_or_equal_to(100)}
 
@@ -17,7 +16,6 @@ RSpec.describe Coupon do
 
   describe "relationships" do
     it {should belong_to :merchant}
-    # it {should belong_to(:order).optional}
     it {should have_many :orders}
   end
 
@@ -54,6 +52,27 @@ RSpec.describe Coupon do
         expect(coupon_2.never_applied?).to eq(true)
       end
     end
-  end
 
+    describe "#deactivate" do
+      it "changes a coupons status from active? = true to active? = false" do
+        coupon_1 = create(:coupon)
+
+        coupon_1.deactivate
+
+        expect(coupon_1.active?).to eq(false)
+      end
+    end
+
+    describe "#activate" do
+      it "changes a coupons status from active? = false to active? = true" do
+        coupon_1 = create(:coupon)
+
+        coupon_1.update!(active?: false)
+
+        coupon_1.activate
+
+        expect(coupon_1.active?).to eq(true)
+      end
+    end
+  end
 end

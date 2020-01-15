@@ -12,4 +12,12 @@ class Coupon < ApplicationRecord
   def never_applied?
     orders.empty?
   end
+
+  def deactivate
+    toggle!(:active?)
+  end
+
+  def activate
+    toggle!(:active?)
+  end
 end
