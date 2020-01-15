@@ -15,10 +15,10 @@ class Merchant::CouponsController < Merchant::BaseController
     merchant = Merchant.find(current_user.merchant_id)
     @coupon = merchant.coupons.new(coupon_params)
 
-    if merchant.less_than_five_coupons?
+    if merchant.less_than_five_active_coupons?
       attempt_coupon_creation(@coupon)
     else
-      flash[:error] = "You already have 5 coupons. You must delete a coupon and try again."
+      flash[:error] = "You already have 5 coupons. You must disable or delete a coupon and try again."
       render :new
     end
   end
@@ -74,9 +74,9 @@ class Merchant::CouponsController < Merchant::BaseController
     end
 
     def update_status(coupon)
-      if params[:status] = "deactivate"
+      if params[:status] == "deactivate"
         coupon.deactivate
-      elsif params[:status] = "activate"
+      elsif params[:status] == "activate"
         coupon.activate
       end
       redirect_to merchant_coupons_path
