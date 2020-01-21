@@ -11,7 +11,7 @@ RSpec.describe "As a merchant" do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant)
 
-      visit merchant_path
+      visit "/merchant"
     end
 
     it "I see a list of all my coupons and their details" do

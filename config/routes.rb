@@ -2,13 +2,14 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get "/", to: "welcome#index"
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  # get "/merchants", to: "merchants#index"
+  # get "/merchants/new", to: "merchants#new"
+  # get "/merchants/:id", to: "merchants#show"
+  # post "/merchants", to: "merchants#create"
+  # get "/merchants/:id/edit", to: "merchants#edit"
+  # patch "/merchants/:id", to: "merchants#update"
+  # delete "/merchants/:id", to: "merchants#destroy"
+  resources :merchants
 
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
@@ -54,7 +55,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   post '/coupon', to: 'coupon_sessions#create'
-  
+
   namespace :merchant  do
     get '/', to: 'dashboard#show'
     resources :orders, only: [:show, :update]

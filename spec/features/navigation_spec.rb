@@ -124,7 +124,7 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq('/cart')
 
         click_on('Merchant Dashboard')
-        expect(current_path).to eq(merchant_path)
+        expect(current_path).to eq("/merchant")
 
         expect(page).to_not have_link('Register')
         expect(page).to_not have_link('Login')
@@ -162,7 +162,7 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq('/cart')
 
         click_on('Merchant Dashboard')
-        expect(current_path).to eq(merchant_path)
+        expect(current_path).to eq("/merchant")
 
         expect(page).to_not have_link('Register')
         expect(page).to_not have_link('Login')
@@ -213,7 +213,7 @@ RSpec.describe 'Site Navigation' do
     describe "As a visitor" do
       it "when I try to access any path that begins with /merchant, /admin, or /profile as a visitor, I see a 404 error" do
 
-        visit(merchant_path)
+        visit("/merchant")
         expect(page).to have_content("The page you were looking for doesn't exist.")
 
         visit(admin_path)
@@ -231,7 +231,7 @@ RSpec.describe 'Site Navigation' do
 
         allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-        visit(merchant_path)
+        visit("/merchant")
         expect(page).to have_content("The page you were looking for doesn't exist.")
 
         visit(admin_path)
@@ -271,7 +271,7 @@ RSpec.describe 'Site Navigation' do
           visit '/cart'
           expect(page).to have_content("The page you were looking for doesn't exist.")
 
-          visit(merchant_path)
+          visit("/merchant")
           expect(page).to have_content("The page you were looking for doesn't exist.")
         end
       end

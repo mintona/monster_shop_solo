@@ -8,7 +8,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
-      visit merchant_path
+      visit "/merchant"
 
       expect(page).to have_content(bike_shop.name)
       expect(page).to have_content(bike_shop.address)
@@ -25,7 +25,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-    visit merchant_path
+    visit "/merchant"
 
     expect(page).to have_content(bike_shop.name)
     expect(page).to have_content(bike_shop.address)
@@ -41,7 +41,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_employee)
 
 
-    visit merchant_path
+    visit "/merchant"
     click_link 'View Your Items'
 
     expect(current_path).to eq(merchant_items_path)
@@ -53,7 +53,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
 
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant_admin)
 
-    visit merchant_path
+    visit "/merchant"
     click_link 'View Your Items'
 
     expect(current_path).to eq(merchant_items_path)
@@ -83,7 +83,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
 
       @order_2.update(status: "cancelled")
 
-      visit merchant_path
+      visit "/merchant"
       within "#pending-orders" do
         within "#order-#{@order.id}" do
           expect(page).to have_content(@order.created_at)
@@ -95,7 +95,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
 
       expect(current_path).to eq("/merchant/orders/#{@order.id}")
 
-      visit merchant_path
+      visit "/merchant"
 
       within "#pending-orders" do
         expect(page).to_not have_link("Order Number: #{@order_2.id}")
