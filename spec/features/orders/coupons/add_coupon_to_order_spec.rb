@@ -33,7 +33,7 @@ RSpec.describe "As a user" do
       end
 
       it "I see the coupon to be applied to my order with the discounted total" do
-        visit orders_new_path
+        visit new_order_path
 
         expect(page).to have_content("Total: $27.00")
         expect(page).to have_content("Discounted Total: $21.60")
@@ -42,7 +42,7 @@ RSpec.describe "As a user" do
 
       describe "I fill in my shipping address" do
         before :each do
-          visit orders_new_path
+          visit new_order_path
 
           fill_in "Name", with: @user.name
           fill_in "Address", with: @user.address

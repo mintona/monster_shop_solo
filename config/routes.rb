@@ -38,11 +38,10 @@ Rails.application.routes.draw do
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
 
-  delete "/profile/orders/:order_id", to: "orders#destroy"
-  get "/orders/new", to: "orders#new"
-  get "/orders/:id", to: "orders#show"
-  patch '/orders/update/:id', to: 'orders#update'
-  # resources :orders, only: [:new, :show, :update]
+  # get "/orders/new", to: "orders#new"
+  # get "/orders/:id", to: "orders#show"
+  # patch '/orders/update/:id', to: 'orders#update'
+  resources :orders, only: [:new, :show, :update]
 
   delete "/profile/orders/:order_id", to: "orders#destroy"
   get '/profile/orders', to: 'orders#index'
