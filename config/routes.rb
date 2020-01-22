@@ -43,10 +43,10 @@ Rails.application.routes.draw do
   # patch '/orders/update/:id', to: 'orders#update'
   resources :orders, only: [:new, :show, :update]
 
-  delete "/profile/orders/:order_id", to: "orders#destroy"
   get '/profile/orders', to: 'orders#index'
   post "/profile/orders", to: "orders#create"
   get "/profile/orders/:order_id", to: "orders#show"
+  delete "/profile/orders/:order_id", to: "orders#destroy"
 
   get "/users/register", to: "users#new"
   post "/users", to: "users#create"
