@@ -16,18 +16,21 @@ Rails.application.routes.draw do
   # get "/items/:id/edit", to: "items#edit"
   # patch "/items/:id", to: "items#update"
   # delete "/items/:id", to: "items#destroy"
-  resources :items, only: [:index, :show, :edit, :update, :destroy]
+  resources :items, only: [:index, :show, :edit, :update, :destroy] do
+      resources :reviews, only: [:new, :create]
+  # get "/items/:item_id/reviews/new", to: "reviews#new"
+  # post "/items/:item_id/reviews", to: "reviews#create"
+  end
 
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
 
-  get "/items/:item_id/reviews/new", to: "reviews#new"
-  post "/items/:item_id/reviews", to: "reviews#create"
 
-  get "/reviews/:id/edit", to: "reviews#edit"
-  patch "/reviews/:id", to: "reviews#update"
-  delete "/reviews/:id", to: "reviews#destroy"
+  # get "/reviews/:id/edit", to: "reviews#edit"
+  # patch "/reviews/:id", to: "reviews#update"
+  # delete "/reviews/:id", to: "reviews#destroy"
+  resources :reviews, only: [:edit, :update, :destroy]
 
   get "/cart", to: "cart#show"
   post "/cart/:item_id", to: "cart#add_item"
@@ -39,6 +42,7 @@ Rails.application.routes.draw do
   get "/orders/new", to: "orders#new"
   get "/orders/:id", to: "orders#show"
   patch '/orders/update/:id', to: 'orders#update'
+  # resources :orders, only: [:new, :show, :update]
 
   delete "/profile/orders/:order_id", to: "orders#destroy"
   get '/profile/orders', to: 'orders#index'
