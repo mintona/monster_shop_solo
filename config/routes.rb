@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   # patch '/orders/update/:id', to: 'orders#update'
   resources :orders, only: [:new, :show, :update]
 
+# I believe this all stay hand-rolled since the profile id is never exposed in a route
   get '/profile/orders', to: 'orders#index'
   post "/profile/orders", to: "orders#create"
   get "/profile/orders/:order_id", to: "orders#show"
@@ -54,13 +55,14 @@ Rails.application.routes.draw do
   get "/profile/edit", to: "users#edit"
   patch "/profile", to: "users#update"
 
-
+# Sessions, so no resources
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
   post '/coupon', to: 'coupon_sessions#create'
 
+#the resources below were all added after the group project as part of the solo project.
   namespace :merchant  do
     get '/', to: 'dashboard#show'
     resources :orders, only: [:show, :update]
