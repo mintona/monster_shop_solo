@@ -44,7 +44,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
     visit "/merchant"
     click_link 'View Your Items'
 
-    expect(current_path).to eq(merchant_items_path)
+    expect(current_path).to eq("/merchant/items")
   end
 
   it "I see a link to view my own items and when I click that link, my URI route should be '/merchant/items'" do
@@ -56,7 +56,7 @@ RSpec.describe "As a merchant employee or merchant admin" do
     visit "/merchant"
     click_link 'View Your Items'
 
-    expect(current_path).to eq(merchant_items_path)
+    expect(current_path).to eq("/merchant/items")
   end
 
   describe "if any users have pending orders containing items I sell" do

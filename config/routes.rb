@@ -2,6 +2,15 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get "/", to: "welcome#index"
 
+# I had to move this to the top of the file to get my form_for to create/edit items
+# to work properly
+  namespace :merchant  do
+    get '/', to: 'dashboard#show'
+    resources :items, only: [:index, :show, :update, :destroy, :new, :create, :edit]
+    resources :orders, only: [:show, :update]
+    resources :coupons, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  end
+
   # get "/merchants", to: "merchants#index"
   # get "/merchants/new", to: "merchants#new"
   # get "/merchants/:id", to: "merchants#show"
@@ -9,9 +18,11 @@ Rails.application.routes.draw do
   # get "/merchants/:id/edit", to: "merchants#edit"
   # patch "/merchants/:id", to: "merchants#update"
   # delete "/merchants/:id", to: "merchants#destroy"
+  # get "/merchants/:merchant_id/items", to: "items#index"
+  post "/merchants/:merchant_id/items", to: "items#create"
   resources :merchants do
     # get "/merchants/:merchant_id/items/new", to: "items#new"
-    resources :items, only: [:new]
+    resources :items, only: [:new, :index]
   end
 
   # get "/items", to: "items#index"
@@ -24,10 +35,6 @@ Rails.application.routes.draw do
   # get "/items/:item_id/reviews/new", to: "reviews#new"
   # post "/items/:item_id/reviews", to: "reviews#create"
   end
-
-  get "/merchants/:merchant_id/items", to: "items#index"
-
-  post "/merchants/:merchant_id/items", to: "items#create"
 
 
   # get "/reviews/:id/edit", to: "reviews#edit"
@@ -70,12 +77,7 @@ Rails.application.routes.draw do
   post '/coupon', to: 'coupon_sessions#create'
 
 #the resources below were all added after the group project as part of the solo project.
-  namespace :merchant  do
-    get '/', to: 'dashboard#show'
-    resources :orders, only: [:show, :update]
-    resources :items, only: [:index, :show, :update, :destroy, :new, :create, :edit]
-    resources :coupons, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  end
+
 
   namespace :admin do
     get '/', to: 'dashboard#index'
