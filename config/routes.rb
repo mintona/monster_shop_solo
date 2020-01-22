@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   # get "/merchants/:id/edit", to: "merchants#edit"
   # patch "/merchants/:id", to: "merchants#update"
   # delete "/merchants/:id", to: "merchants#destroy"
-  resources :merchants
+  resources :merchants do
+    # get "/merchants/:merchant_id/items/new", to: "items#new"
+    resources :items, only: [:new]
+  end
 
   # get "/items", to: "items#index"
   # get "/items/:id", to: "items#show"
@@ -23,7 +26,7 @@ Rails.application.routes.draw do
   end
 
   get "/merchants/:merchant_id/items", to: "items#index"
-  get "/merchants/:merchant_id/items/new", to: "items#new"
+
   post "/merchants/:merchant_id/items", to: "items#create"
 
 
@@ -32,11 +35,13 @@ Rails.application.routes.draw do
   # delete "/reviews/:id", to: "reviews#destroy"
   resources :reviews, only: [:edit, :update, :destroy]
 
+# Cart is not a resource, it's a session so no resources
   get "/cart", to: "cart#show"
   post "/cart/:item_id", to: "cart#add_item"
   patch "/cart/:item_id", to: "cart#update"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
+
 
   # get "/orders/new", to: "orders#new"
   # get "/orders/:id", to: "orders#show"
@@ -44,6 +49,8 @@ Rails.application.routes.draw do
   resources :orders, only: [:new, :show, :update]
 
 # I believe this all stay hand-rolled since the profile id is never exposed in a route
+# and creating a resource for profile, even if all verbs are 'excepted' creates
+# routes like '/profile/:profile_id/orders'
   get '/profile/orders', to: 'orders#index'
   post "/profile/orders", to: "orders#create"
   get "/profile/orders/:order_id", to: "orders#show"
