@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "/", to: "welcome#index"
 
 # I had to move this to the top of the file to get my form_for to create/edit items
-# to work properly
+# to work properly. Merchant namespace was created after the group project before solo project.
   namespace :merchant  do
     get '/', to: 'dashboard#show'
     resources :items, only: [:index, :show, :update, :destroy, :new, :create, :edit]
@@ -36,7 +36,6 @@ Rails.application.routes.draw do
   # post "/items/:item_id/reviews", to: "reviews#create"
   end
 
-
   # get "/reviews/:id/edit", to: "reviews#edit"
   # patch "/reviews/:id", to: "reviews#update"
   # delete "/reviews/:id", to: "reviews#destroy"
@@ -48,7 +47,6 @@ Rails.application.routes.draw do
   patch "/cart/:item_id", to: "cart#update"
   delete "/cart", to: "cart#empty"
   delete "/cart/:item_id", to: "cart#remove_item"
-
 
   # get "/orders/new", to: "orders#new"
   # get "/orders/:id", to: "orders#show"
@@ -76,9 +74,7 @@ Rails.application.routes.draw do
 
   post '/coupon', to: 'coupon_sessions#create'
 
-#the resources below were all added after the group project as part of the solo project.
-
-
+#Admin namespace was added after the group project as part of the solo project.
   namespace :admin do
     get '/', to: 'dashboard#index'
     resources :users, only: [:index, :show] do
