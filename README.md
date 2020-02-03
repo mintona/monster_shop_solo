@@ -8,7 +8,7 @@ Monster Shop is an e-commerce application in which users can register, login, an
 ### Implementation
 
 #### Access Locally
-* Clone this repo with: `git clone git@github.com:DavidBarriga-Gomez/monster_shop_part_1.git`
+* Clone this repo with: `git clone git@github.com:mintona/monster_shop_solo.git`
 * Install Ruby 2.4.1
 * Install Rails 5.1.7
 * Run `$ bundle install`
